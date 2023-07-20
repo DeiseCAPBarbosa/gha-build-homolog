@@ -41,11 +41,6 @@ jobs:
     name: Build Homolog
     needs: [ setup ]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        branch_name: ${{ fromJSON( needs.setup.outputs.branches ) }}
-      fail-fast: true
-      max-parallel: 1
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v2
@@ -58,16 +53,17 @@ jobs:
           git config --global user.name "Homolog Robot"
           git fetch --all
           git checkout homolog
-          lista_branches=''
+          lista_branches=''          
           if [[ -f homolog-branches ]]; then
             lista_branches=$(cat homolog-branches)
-          fi;
+          fi;          
+          lista_branches=`echo -e "$lista_branches\n${{ needs.setup.outputs.branches }}" | tr ' ' '\n' | sort -u`                              
           git checkout develop
           git branch -D homolog
           git checkout -b homolog develop
-          if ! echo "$lista_branches" | grep -qF "${{ matrix.branch_name }}"; then
-            lista_branches=`echo -e "$lista_branches\n${{ matrix.branch_name }}"`
-          fi
+##          if ! echo "$lista_branches" | grep -qF "${{ matrix.branch_name }}"; then
+##            lista_branches=`echo -e "$lista_branches\n${{ matrix.branch_name }}"`
+##          fi
           nova_lista=$lista_branches
           echo "DEBUG: Entrando no loop"
           while read -r branch; do
