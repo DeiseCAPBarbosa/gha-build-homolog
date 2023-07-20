@@ -54,7 +54,6 @@ jobs:
 
       - name: Atualizar branch homolog
         run: |
-          sleep 30
           git config --global user.email "robot@github.com"
           git config --global user.name "Homolog Robot"
           git fetch --all

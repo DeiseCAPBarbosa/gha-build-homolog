@@ -64,3 +64,9 @@ function git_prompt_info() {
 gitinfo="\$(git_prompt_info)"
 
 PS1="${linebreak}${gitinfo}${cl_cyan}${currentdir}${cl_none}${linebreak}${pointer}"
+
+function gpa() {
+    git add .
+    git commit -m "$1"
+    git push
+}
