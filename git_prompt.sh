@@ -63,6 +63,6 @@ function git_prompt_info() {
 
 gitinfo=$(git_prompt_info)
 
-PS1="${linebreak}${gitinfo}${cl_cyan}${currentdir}${cl_none}${linebreak}${pointer}"
+PS1="${linebreak}$(git_prompt_info)${cl_cyan}${currentdir}${cl_none}${linebreak}${pointer}"
 PROMPT_FULL=$PS1
 PROMPT_SIMPLE="${linebreak}${gitinfo}${linebreak}${pointer}"
