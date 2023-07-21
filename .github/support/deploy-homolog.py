@@ -35,6 +35,7 @@ def getBranches(currentList, mergeList):
     branches = 
     currentList = [branch.strip() for branch in currentList.splitlines()]
     branches = [branch for branch in currentList if branch not in deleteBranches]
+    currentList.remove(deleteBranches)
     print(branches)
     return
 
