@@ -32,12 +32,11 @@ def getBranches(currentList, mergeList):
             branches.remove(branch)
 
     # Remove deleteBranches from branches
-    branches = 
-    currentList = [branch.strip() for branch in currentList.splitlines()]
-    branches = [branch for branch in currentList if branch not in deleteBranches]
-    currentList.remove(deleteBranches)
-    print(branches)
-    return
+    # branches = 
+    # currentList = [branch.strip() for branch in currentList.splitlines()]
+    # branches = [branch for branch in currentList if branch not in deleteBranches]
+    # print(branches)
+    # return
 
     # strip whitespaces from each branch
     return [branch.strip() for branch in branches]
