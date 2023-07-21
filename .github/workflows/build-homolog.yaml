@@ -76,6 +76,7 @@ jobs:
           lista_branches=`echo -e "$lista_branches\n${{ needs.setup.outputs.branches }}" | tr ' ' '\n' | sort -u`
 
           # Processa novo homolog
+          git checkout main &> /dev/null
           set +e
           output=`bash .github/support/deploy-environment.sh "$lista_branches"`
           result=$?
