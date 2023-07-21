@@ -16,12 +16,11 @@ def parseBranches(payload):
     return [branch.strip() for branch in branches]
 
 def getBranches(currentList, mergeList):
-    matches = re.search("##\s+branches\s*([^#]*)", mergeList, re.IGNORECASE + re.MULTILINE)
+    currentList = currentList.split()
 
     # Strip matches by end line character and get an array of branches
+    matches = re.search("##\s+branches\s*([^#]*)", mergeList, re.IGNORECASE + re.MULTILINE)
     branches = [branch.strip() for branch in matches.group(1).splitlines()]
-
-    # Remove empty branches
     branches = list(filter(None, branches))
 
     # percorra branches e verifique as que contém _DELETE_ no nome. Adicione em deleteBranches e remova-as de branches
@@ -29,17 +28,17 @@ def getBranches(currentList, mergeList):
     for branch in branches:
         if '_DELETE_' in branch:
             deleteBranches.append(branch.replace('_DELETE_', '').strip())
-            branches.remove(branch)
+        else:
+            currentList.append(branch.strip())
 
-    # Remove deleteBranches from branches
-    # branches = 
-    # currentList = [branch.strip() for branch in currentList.splitlines()]
-    # branches = [branch for branch in currentList if branch not in deleteBranches]
-    # print(branches)
-    # return
+    # remove from currentList the branches that are in deleteBranches
+    for branch in deleteBranches:
+        if branch in currentList:
+            currentList.remove(branch)
 
-    # strip whitespaces from each branch
-    return [branch.strip() for branch in branches]
+    # return currentList
+    return currentList
+
 
 try:
     command = sys.argv[1]
@@ -51,8 +50,7 @@ try:
         exit()
 
     if command == 'get-branches':
-        getBranches(currentList, mergeList)
-        # print('\n'.join(getBranches(currentList, mergeList)))
+        print(getBranches(currentList, mergeList))
         exit()
 
     print('["invalid-command"]')
