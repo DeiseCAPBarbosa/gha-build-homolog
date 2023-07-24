@@ -63,13 +63,13 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      # - name: Deploy to production
-      #   id: deploy
-      #   run: |
-      #     result=`curl -XGET https://api.render.com/deploy/srv-cis3jplph6et1sdhf610?key=3KXi8Pw0DdA`
-      #     echo "result<<EOF" >> $GITHUB_OUTPUT
-      #     echo "$result" >> $GITHUB_OUTPUT
-      #     echo "EOF" >> $GITHUB_OUTPUT
+      - name: Deploy to production
+        id: deploy
+        run: |
+          result=`curl -XGET https://api.render.com/deploy/srv-cis3jplph6et1sdhf610?key=3KXi8Pw0DdA`
+          echo "result<<EOF" >> $GITHUB_OUTPUT
+          echo "$result" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Close issue with failure
         uses: peter-evans/close-issue@v2
