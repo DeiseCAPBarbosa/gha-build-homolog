@@ -5,6 +5,9 @@ on:
     branches:
       - develop
 
+concurrency:
+  group: build-homolog
+
 jobs:
   update-branch:
     name: Update Develop
@@ -17,11 +20,5 @@ jobs:
 
       - name: Rebase branch
         run: |
-          git fetch --all
-          git checkout homolog
-          lista_branches=$(cat homolog-branches)
-          set +e
-          output=`bash .github/support/deploy-environment.sh "$lista_branches"`
-          result=$?
-          echo "error=$output" >> $GITHUB_OUTPUT
-          exit $result
+          git checkout homolog &> /dev/null
+          bash .github/support/deploy-environment.sh "`cat homolog-branches`"
