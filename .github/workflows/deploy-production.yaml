@@ -80,7 +80,7 @@ jobs:
   close-issue-with-success:
     if: success() && !cancelled()
     name: Close Issue
-    needs: [ build ]
+    needs: [ push_to_registry ]
     runs-on: ubuntu-latest
     steps:
       - name: Close issue with success
