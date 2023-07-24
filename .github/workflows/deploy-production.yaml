@@ -7,6 +7,10 @@ name: Deploy to production
 on:
   workflow_dispatch:  # Permite a ativação manual do workflow
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 concurrency:
   group: deploy-production
 
@@ -31,8 +35,11 @@ jobs:
     needs: [ setup ]
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - name: Check out the repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Log in to the Container registry
